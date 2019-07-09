@@ -20,7 +20,7 @@ If there's any issues on recognizing installed packages, try to export PYTHONPAT
 ```
 export PYTHONPATH=/your/path/to/venv/lib/python2.7/site-packages/
 ```
-If exporting PYTHONPATH doesn't solve the problems, try to create __init__.py for the module as shown below:
+If exporting PYTHONPATH doesn't solve the problems, try to create ```__init__.py``` for the module as shown below:
 ```
 cp /your/path/to/venv/lib/python2.7/site-packages/google/protobuf/__init__.py /your/path/to/venv/lib/python2.7/site-packages/google/
 ```
