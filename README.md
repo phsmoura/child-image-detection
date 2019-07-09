@@ -11,7 +11,7 @@ After installing these packages, it's recommended to create a virtual environmen
 $ virtualenv <name_of_your_virtual_environment>
 $ source <name_of_your_virtual_environment>/bin/activate
 ```
-Now, with active virtualenv, install dependencies packages by running:
+Now, with active virtualenv, install dependency packages by running:
 ```
 $ sudo pip install -r requirements.txt
 ```

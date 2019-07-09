@@ -1,0 +1,6 @@
+datasets
+*/images
+venv
+weight_kids.h5
+kids.json
+*.pyc
