@@ -7,19 +7,17 @@ from matplotlib import pyplot as plt
 import os
 import shutil
 
-archive = open('kids.json','r')
-settingsRaioX = archive.read()
-archive.close()
+def validation(dir,images,number_validations):
+    # load files generated on training
+    archive = open('kids.json','r')
+    settingsRaioX = archive.read()
+    archive.close()
 
-classifier = model_from_json(settingsRaioX)
-classifier.load_weights('weight_kids.h5')
+    classifier = model_from_json(settingsRaioX)
+    classifier.load_weights('weight_kids.h5')
 
-def validation(dir,images):
     if not os.path.exists('validation-tests'):
         os.makedirs('validation-tests')
-
-    if 'non-child' not in dir:
-        number_validations = len(os.listdir('validation-tests/')) + 1
 
     for image in images:
         filename = dir + image
@@ -37,9 +35,9 @@ def validation(dir,images):
 
         if previ[0][0] > 0.5:
             # print('Metrica: {:.2f} - Original: {} - Classificacao: Nao crianca'.format(previ[0][0],image))
-            with open('validation-tests/' + number_validations + '.txt') as file:
+            with open('validation-tests/' + str(number_validations) + '.txt','a') as file:
                 file.write('Metrica: {:.2f} - Classificacao Original: {} - CNN: Nao crianca\n'.format(previ[0][0],image[:-4]))
         else:
             # print('Metrica: {:.2f} - Original: {} - Classificacao: crianca'.format(previ[0][0],image))
-            with open('validation-tests/' + number_validations + '.txt') as file:
+            with open('validation-tests/' + str(number_validations) + '.txt','a') as file:
                 file.write('Metrica: {:.2f} - Classificacao Original: {} - CNN: Crianca\n'.format(previ[0][0],image[:-4]))
