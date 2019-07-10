@@ -6,6 +6,7 @@ Before running these codes it should be installed:
 - Python 2.7
 - OpenCV 4.1.1
 - Pip
+
 After installing these packages, it's recommended to create a virtual environment. To do that just run the commands below to create and activate virtual environment:
 ```
 $ virtualenv venv
