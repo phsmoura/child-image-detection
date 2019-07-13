@@ -1,7 +1,8 @@
 datasets
-*/images
+images
 venv
-*/validation-tests
+nohup*
+validation-tests
 weight_kids.h5
 kids.json
 *.pyc

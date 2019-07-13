@@ -28,7 +28,7 @@ def cnn_train(images_training,images_test):
     image_height = 150
     image_width = 150
     batch_size = 32
-    no_of_epochs = 1
+    no_of_epochs = 15
 
     # playground.tensorflow.org
     # relu funcao de ativacao para deixar pixels negativos zerados, consegue retirar mais contrastes

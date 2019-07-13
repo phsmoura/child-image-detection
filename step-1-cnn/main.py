@@ -3,6 +3,7 @@
 from build_dataset import  *
 from cnn_training import  *
 from validation_cnn import  *
+import subprocess
 
 def main(number_validations):
     # building test and validation datasets
@@ -48,8 +49,19 @@ def main(number_validations):
 
     rebuild_dataset()
 
+def error_calculate(count):
+    file = 'validation-tests/' + str(count) + '.txt'
+    total_images = 712
+    e1 = int(subprocess.check_output("grep 'Crianca' " + file + " | grep 'non-child' | wc -l", shell=True))
+    e2 = int(subprocess.check_output("grep 'Nao crianca' " + file + " | grep ': child' | wc -l", shell=True))
+    total_errors = e1 + e2
+    error_percent = total_errors * 100 / total_images
+
+    print("File: {}.txt - Erro: {}%".format(count,error_percent))
+
 if __name__ == '__main__':
     count = 1
     while count <= 30:
-        main(count)
+        # main(count)
+        error_calculate(count)
         count += 1
