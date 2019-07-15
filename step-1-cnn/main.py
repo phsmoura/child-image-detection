@@ -54,14 +54,46 @@ def error_calculate(count):
     total_images = 712
     e1 = int(subprocess.check_output("grep 'Crianca' " + file + " | grep 'non-child' | wc -l", shell=True))
     e2 = int(subprocess.check_output("grep 'Nao crianca' " + file + " | grep ': child' | wc -l", shell=True))
+
     total_errors = e1 + e2
+    total_success = total_images - total_errors
+    success_percent = total_success * 100 / total_images
     error_percent = total_errors * 100 / total_images
 
-    print("File: {}.txt - Erro: {}%".format(count,error_percent))
+    print("{}\t{}\t{}%\t\t{}\t{}%".format(count,total_success,success_percent,total_errors,error_percent))
+    total = [total_success,total_errors]
+
+    return total
 
 if __name__ == '__main__':
     count = 1
-    while count <= 30:
+    sum_success,sum_error = 0,0
+    n = 30
+    success_array = []
+    error_array = []
+    dp_suc,dp_err = 0,0
+
+    print("Teste\tAcertos\tAcerto %\tErros\tErro %")
+    while count <= n:
         # main(count)
-        error_calculate(count)
+        total = error_calculate(count)
+        success_array.append(total[0])
+        error_array.append(total[1])
         count += 1
+
+    for k in range(n):
+        sum_success += success_array[k]
+        sum_error += error_array[k]
+
+    average_success = sum_success / n
+    average_error = sum_error / n
+
+    for k in range(n):
+        dp_suc += (success_array[k] - average_success)**2
+        dp_err += (error_array[k] - average_error)**2
+
+    dp1 = (dp_suc / n)**(0.5)
+    dp2 = (dp_err / n)**(0.5)
+
+    print("\nMedia suc:\t{}\nMedia err:\t{}\nDesvio padrao suc:\t{:.2f}\nDesvio padrao err:\t{:.2f}"
+    .format(average_success,average_error,dp1,dp2))
