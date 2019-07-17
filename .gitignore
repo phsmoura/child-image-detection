@@ -1,8 +1,11 @@
 datasets
-images
 venv
+
+images
+validation-t*
+models
+
 nohup*
-validation-tests
-weight_kids.h5
-kids.json
 *.pyc
+tests-results*
+*.sh

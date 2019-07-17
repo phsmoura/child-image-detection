@@ -18,6 +18,7 @@ def validation(dir,images,number_validations):
 
     if not os.path.exists('validation-tests'):
         os.makedirs('validation-tests')
+        os.makedirs('models')
 
     for image in images:
         filename = dir + image

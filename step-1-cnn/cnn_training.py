@@ -42,11 +42,11 @@ def cnn_train(images_training,images_test):
     model.add(MaxPooling2D(pool_size=(3, 3)))
 
     # tecnica para reduzir o overfiting
-    model.add(Dropout(0.7))
+    model.add(Dropout(0.5))
     model.add(Conv2D(batch_size * 2,(3,3), activation='relu'))
     model.add(Conv2D(batch_size * 2,(3,3), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.4))
     model.add(Conv2D(batch_size * 3,(3, 3), activation='relu'))
     model.add(Conv2D(batch_size * 3,(3, 3), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))

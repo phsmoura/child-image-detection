@@ -4,6 +4,8 @@ from build_dataset import  *
 from cnn_training import  *
 from validation_cnn import  *
 import subprocess
+import os
+import shutil
 
 def main(number_validations):
     # building test and validation datasets
@@ -19,8 +21,8 @@ def main(number_validations):
         training_child_images = os.listdir(path_child_images)
         training_non_child_images = os.listdir(path_non_child_images)
 
-        num_child_images = update_number_images(training_child_images,0.15)
-        num_non_child_images = update_number_images(training_non_child_images,0.15)
+        num_child_images = update_number_images(training_child_images,0.1)
+        num_non_child_images = update_number_images(training_non_child_images,0.1)
 
         child_list = []
         non_child_list = []
@@ -47,11 +49,16 @@ def main(number_validations):
     validation(child_dir,images_child,number_validations)
     validation(non_child_dir,images_non_child,number_validations)
 
+    # copy result files
+    os.makedirs('models/' + str(number_validations))
+    shutil.move('kids.json', 'models/' + str(number_validations))
+    shutil.move('weight_kids.h5', 'models/' + str(number_validations))
+
     rebuild_dataset()
 
 def error_calculate(count):
     file = 'validation-tests/' + str(count) + '.txt'
-    total_images = 712
+    total_images = 474
     e1 = int(subprocess.check_output("grep 'Crianca' " + file + " | grep 'non-child' | wc -l", shell=True))
     e2 = int(subprocess.check_output("grep 'Nao crianca' " + file + " | grep ': child' | wc -l", shell=True))
 
@@ -60,7 +67,9 @@ def error_calculate(count):
     success_percent = total_success * 100 / total_images
     error_percent = total_errors * 100 / total_images
 
-    print("{}\t{}\t{}%\t\t{}\t{}%".format(count,total_success,success_percent,total_errors,error_percent))
+    with open('tests-results.txt','a') as file:
+        file.write("{}\t{}\t{}%\t{}\t{}%\n".format(count,total_success,success_percent,total_errors,error_percent))
+
     total = [total_success,total_errors]
 
     return total
@@ -68,14 +77,16 @@ def error_calculate(count):
 if __name__ == '__main__':
     count = 1
     sum_success,sum_error = 0,0
-    n = 30
+    n = 50
     success_array = []
     error_array = []
     dp_suc,dp_err = 0,0
 
-    print("Teste\tAcertos\tAcerto %\tErros\tErro %")
+    with open('tests-results.txt','a') as file:
+        file.write("Teste\tAcertos\tAcerto %\tErros\tErro %\n")
+
     while count <= n:
-        # main(count)
+        main(count)
         total = error_calculate(count)
         success_array.append(total[0])
         error_array.append(total[1])
@@ -95,5 +106,6 @@ if __name__ == '__main__':
     dp1 = (dp_suc / n)**(0.5)
     dp2 = (dp_err / n)**(0.5)
 
-    print("\nMedia suc:\t{}\nMedia err:\t{}\nDesvio padrao suc:\t{:.2f}\nDesvio padrao err:\t{:.2f}"
-    .format(average_success,average_error,dp1,dp2))
+    with open('tests-results.txt','a') as file:
+        file.write("\nMedia suc:\t{}\nMedia err:\t{}\nDesvio padrao suc:\t{:.2f}\nDesvio padrao err:\t{:.2f}\n"
+        .format(average_success,average_error,dp1,dp2))
