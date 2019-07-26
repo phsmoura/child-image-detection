@@ -14,3 +14,6 @@ nohup*
 *.pyc
 tests-results*
 *.sh
+kids.json
+weight_kids.h5
+info.txt
