@@ -77,7 +77,7 @@ def error_calculate(count):
 if __name__ == '__main__':
     count = 1
     sum_success,sum_error = 0,0
-    n = 50
+    n = 100
     success_array = []
     error_array = []
     dp_suc,dp_err = 0,0

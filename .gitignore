@@ -3,7 +3,12 @@ venv
 
 images
 validation-t*
+tests-50
 models
+
+bases
+natural_images
+*.zip
 
 nohup*
 *.pyc
