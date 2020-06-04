@@ -82,8 +82,20 @@ if __name__ == '__main__':
     error_array = []
     dp_suc,dp_err = 0,0
 
+    # creating dirs
+    dir_list = os.listdir("../dataset")
+    dir_create = ['1-training','2-test','3-validation-test']
+
+    for dc in dir_create:
+        if dc == '1-training':
+            for dl in dir_list:
+                shutil.copytree("../dataset/" + dl, "images/" + dc + "/" + dl)
+        else:
+            for dl in dir_list:
+                os.makedirs('images/' + dc + "/" + dl)
+
     with open('tests-results.txt','a') as file:
-        file.write("Teste\tAcertos\tAcerto %\tErros\tErro %\n")
+        file.write("Test\tSuccess\tSuccess %\tErrors\tErrors %\n")
 
     while count <= n:
         main(count)
@@ -107,5 +119,5 @@ if __name__ == '__main__':
     dp2 = (dp_err / n)**(0.5)
 
     with open('tests-results.txt','a') as file:
-        file.write("\nMedia suc:\t{}\nMedia err:\t{}\nDesvio padrao suc:\t{:.2f}\nDesvio padrao err:\t{:.2f}\n"
+        file.write("\nAverage suc:\t{}\nAverage err:\t{}\nStd deviation suc:\t{:.2f}\nStd deviation err:\t{:.2f}\n"
         .format(average_success,average_error,dp1,dp2))
