@@ -1,9 +1,10 @@
 *sublime*
 images
 venv
-models
+model*
 validation-tests
 tests-results.txt
-kids.json
-weight_kids.h5
+nohup*
 __pycache__
+natural_images
+base-full
