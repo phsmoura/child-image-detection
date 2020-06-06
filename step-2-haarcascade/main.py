@@ -21,10 +21,10 @@ def face_detection(detect,imagem,img,gray,file):
 
 		if 'person' in imagem:
 			with open (file,'a') as f:
-				f.write('Correto\t{}\n'.format(imagem))
+				f.write('Positive\t{}\n'.format(imagem))
 		else:
 			with open (file,'a') as f:
-				f.write('Errado\t{}\n'.format(imagem))
+				f.write('Negative\t{}\n'.format(imagem))
 
 	# cv2.imshow('img',img)
 	# cv2.waitKey(27)
@@ -36,10 +36,10 @@ def error_calculation(count):
 	total_images_not_person = total_images - total_images_person
 	list_dir = os.listdir('validation-tests')
 
-	for dir in list_dir:
-		file = 'validation-tests/{}/{}.txt'.format(dir,count)
-		correct = int(subprocess.check_output("grep 'Correto' {} | wc -l".format(file), shell=True))
-		wrong = int(subprocess.check_output("grep 'Errado' {} | wc -l".format(file), shell=True))
+	for item in list_dir:
+		file = 'validation-tests/{}/{}.txt'.format(item,count)
+		correct = int(subprocess.check_output("grep 'Positive' {} | wc -l".format(file), shell=True))
+		wrong = int(subprocess.check_output("grep 'Negative' {} | wc -l".format(file), shell=True))
 
 		non_face_not_detected = total_images_not_person - wrong
 		face_not_detected = total_images_person - correct
@@ -48,11 +48,11 @@ def error_calculation(count):
 		error_percent = (wrong + face_not_detected) * 100 / total_images
 
 		with open('tests-results.txt','a') as f:
-		    f.write("{}\t{}\t{}%\t{}\t{}%\n".format(dir,correct,success_percent,wrong,error_percent))
+		    f.write("{}\t{}\t{}%\t{}\t{}%\n".format(item,correct,success_percent,wrong,error_percent))
 
-def main(lista_imagens,count):
+def main(lista_imagens,count,folder):
 	for imagem in lista_imagens:
-		img = cv2.imread(BASE + imagem)
+		img = cv2.imread(BASE + folder + "/" + imagem)
 		gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 		face_default = face_cascade.detectMultiScale(gray, 1.5, 5)
 		face_alt = face_cascade_alt.detectMultiScale(gray, 1.5, 5)
@@ -102,7 +102,7 @@ def main(lista_imagens,count):
 		# cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-	lista_imagens = os.listdir(BASE)
+	lista_base = os.listdir(BASE)
 	count = 1
 
 	if not os.path.exists('validation-tests'):
@@ -110,9 +110,11 @@ if __name__ == '__main__':
 
 	if not os.path.exists('tests-results.txt'):
 		with open('tests-results.txt','a') as file:
-			file.write("Cascata\tAcertos\tAcertos %\tErros\tErros %\n")
+			file.write("Cascade\tSuccess\tSuccess %\tErrors\tErrors %\n")
 
 	while count <= 100:
-		main(lista_imagens,count)
+		for folder in lista_base:
+			lista_imagens = os.listdir(BASE + folder)
+			main(lista_imagens,count,folder)
 		error_calculation(count)
 		count += 1

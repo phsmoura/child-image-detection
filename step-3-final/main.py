@@ -7,21 +7,21 @@ from keras.models import model_from_json
 from matplotlib import pyplot as plt
 import shutil
 
-face_cascade = cv2.CascadeClassifier('haarcascades/haarcascade_frontalface_default.xml')
-face_cascade_alt = cv2.CascadeClassifier('haarcascades/haarcascade_frontalface_alt.xml')
-face_cascade_alt2 = cv2.CascadeClassifier('haarcascades/haarcascade_frontalface_alt2.xml')
-profile_cascade = cv2.CascadeClassifier('haarcascades/haarcascade_profileface.xml')
+face_cascade = cv2.CascadeClassifier('../step-2-haarcascade/haarcascades/haarcascade_frontalface_default.xml')
+face_cascade_alt = cv2.CascadeClassifier('../step-2-haarcascade/haarcascades/haarcascade_frontalface_alt.xml')
+face_cascade_alt2 = cv2.CascadeClassifier('../step-2-haarcascade/haarcascades/haarcascade_frontalface_alt2.xml')
+profile_cascade = cv2.CascadeClassifier('../step-2-haarcascade/haarcascades/haarcascade_profileface.xml')
 
-archive= open('kids.json','r')
-settingsRaioX= archive.read()
+archive= open('model/kids.json','r')
+file_json= archive.read()
 archive.close()
-classifier= model_from_json(settingsRaioX)
-classifier.load_weights('weight_kids.h5')
+classifier= model_from_json(file_json)
+classifier.load_weights('model/weight_kids.h5')
 
 BASE = 'base-full/'
-KID = 'imagens/crianca/'
-NOT_KID = 'imagens/nao-crianca/'
-FACES = 'imagens/rostos/'
+KID = 'images/kids/'
+NOT_KID = 'images/not-kids/'
+FACES = 'images/faces/'
 
 lista_imagens = os.listdir(BASE)
 
@@ -88,4 +88,13 @@ def main():
 		shutil.copy(k, NOT_KID)
 
 if __name__ == '__main__':
+	dirs = ['kids','faces']
+	
+	if not os.path.exists('images'):
+		os.makedirs('images')
+
+	for folder in dirs:
+		if not os.path.exists('images/' + folder):
+			os.makedirs('images/' + folder)
+			
 	main()
