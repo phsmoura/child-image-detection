@@ -37,8 +37,8 @@ def validation(dir,images,number_validations):
         if previ[0][0] > 0.5:
             # print('Metrica: {:.2f} - Original: {} - Classificacao: Nao crianca'.format(previ[0][0],image))
             with open('validation-tests/' + str(number_validations) + '.txt','a') as file:
-                file.write('Metrica: {:.2f} - Classificacao Original: {} - CNN: Nao crianca\n'.format(previ[0][0],image[:-4]))
+                file.write('Metric: {:.2f} - Original Class: {} - CNN: Negative\n'.format(previ[0][0],image[:-4]))
         else:
             # print('Metrica: {:.2f} - Original: {} - Classificacao: crianca'.format(previ[0][0],image))
             with open('validation-tests/' + str(number_validations) + '.txt','a') as file:
-                file.write('Metrica: {:.2f} - Classificacao Original: {} - CNN: Crianca\n'.format(previ[0][0],image[:-4]))
+                file.write('Metric: {:.2f} - Original Class: {} - CNN: Positive\n'.format(previ[0][0],image[:-4]))

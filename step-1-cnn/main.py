@@ -59,8 +59,8 @@ def main(number_validations):
 def error_calculate(count):
     file = 'validation-tests/' + str(count) + '.txt'
     total_images = 474
-    e1 = int(subprocess.check_output("grep 'Crianca' " + file + " | grep 'non-child' | wc -l", shell=True))
-    e2 = int(subprocess.check_output("grep 'Nao crianca' " + file + " | grep ': child' | wc -l", shell=True))
+    e1 = int(subprocess.check_output("grep 'Positive' " + file + " | grep 'non-child' | wc -l", shell=True))
+    e2 = int(subprocess.check_output("grep 'Negative' " + file + " | grep ': child' | wc -l", shell=True))
 
     total_errors = e1 + e2
     total_success = total_images - total_errors
@@ -75,9 +75,11 @@ def error_calculate(count):
     return total
 
 if __name__ == '__main__':
+    # number of times to train cnn
+    n = 100
+
     count = 1
     sum_success,sum_error = 0,0
-    n = 100
     success_array = []
     error_array = []
     dp_suc,dp_err = 0,0
