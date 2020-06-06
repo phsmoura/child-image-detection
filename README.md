@@ -132,7 +132,7 @@ $ python main.py
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/phsmoura/child-image-detection/LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/phsmoura/child-image-detection/blob/master/LICENSE.md) file for details
 
 ## Acknowledgments
 
